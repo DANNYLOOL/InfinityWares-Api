@@ -116,7 +116,7 @@ const registro_producto_admin = async function (req, res) {
 
         if (productos.length == 0) {
             var img_path = req.files.portada.path;
-            var name = img_path.split('\\');
+            var name = img_path.split('/');
             var portada_name = name[2];
 
             data.slug = data.titulo.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
@@ -230,14 +230,14 @@ const actualizar_producto_admin = async function (req, res) {
         if (req.files) {
             //SI HAY IMAGEN
             var img_path = req.files.portada.path;
-            var name = img_path.split('\\');
+            var name = img_path.split('/');
             var portada_name = name[2];
 
             let reg = await Producto.findByIdAndUpdate({ _id: id }, {
                 titulo: data.titulo,
                 stock: data.stock,
-                precio_antes_dolares: data.precio_antes_dolares,
-                precio_dolar: data.precio_dolar,
+                precio_antes: data.precio_antes,
+                precio: data.precio,
                 peso: data.peso,
                 sku: data.sku,
                 categoria: data.categoria,
@@ -261,8 +261,8 @@ const actualizar_producto_admin = async function (req, res) {
             let reg = await Producto.findByIdAndUpdate({ _id: id }, {
                 titulo: data.titulo,
                 stock: data.stock,
-                precio_antes_dolares: data.precio_antes_dolares,
-                precio_dolar: data.precio_dolar,
+                precio_antes: data.precio_antes,
+                precio: data.precio,
                 peso: data.peso,
                 sku: data.sku,
                 categoria: data.categoria,
@@ -379,7 +379,7 @@ const agregar_imagen_galeria_admin = async function (req, res) {
         let data = req.body;
 
         var img_path = req.files.imagen.path;
-        var name = img_path.split('\\');
+        var name = img_path.split('/');
         var imagen_name = name[2];
 
         let reg = await Producto.findByIdAndUpdate({ _id: id }, {
@@ -452,8 +452,7 @@ const actualizar_config_admin = async (req, res) => {
         let data = req.body;
         let config = await Config.findByIdAndUpdate({ _id: '61abe55d2dce63583086f108' }, {
             envio_activacion: data.envio_activacion,
-            monto_min_soles: data.monto_min_soles,
-            monto_min_dolares: data.monto_min_dolares
+            monto_min: data.monto_min,
         });
         res.status(200).send({ data: config });
     } else {

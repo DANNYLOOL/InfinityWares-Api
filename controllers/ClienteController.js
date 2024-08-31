@@ -193,7 +193,7 @@ const enviar_pass = async function (codigo, email) {
             service: 'gmail',
             host: 'smtp.gmail.com',
             auth: {
-                user: 'danyrangel2002@gmail.com',
+                user: 'infinitywares640@gmail.com',
                 pass: 'jxgdpgyyknrxwmlq'
             }
         }));
@@ -210,7 +210,7 @@ const enviar_pass = async function (codigo, email) {
         `;
 
         const mailOptions = {
-            from: 'danyrangel2002@gmail.com',
+            from: 'infinitywares640@gmail.com',
             to: email,
             subject: 'Contraseña Temporal para tu Cuenta',
             html: htmlContent

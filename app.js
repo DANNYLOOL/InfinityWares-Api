@@ -23,13 +23,11 @@ io.on('connection',function(socket){
         io.emit('new-carrito-add',data);
         console.log(data);
     });
-    
 });
 
 
 var cliente_routes = require('./routes/cliente');
 var admin_routes = require('./routes/admin');
-var cupon_routes = require('./routes/cupon');
 
 mongoose.connect('mongodb+srv://DanielRangel:123@danielrangel.wmj6pzi.mongodb.net/tienda',{useUnifiedTopology: true, useNewUrlParser: true}, (err,res)=>{
     if(err){  
@@ -58,6 +56,5 @@ app.use((req,res,next)=>{
 
 app.use('/api',cliente_routes);
 app.use('/api',admin_routes);
-app.use('/api',cupon_routes);
 
 module.exports = app;
