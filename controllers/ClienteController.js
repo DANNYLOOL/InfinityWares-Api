@@ -420,6 +420,45 @@ const listar_productos_recomendados_publico = async function (req, res) {
     res.status(200).send({ data: reg });
 }
 
+const agregar_carrito_cliente = async function (req, res) {
+    if (req.user) {
+        let data = req.body;
+
+        let variedad = await Variedad.findById({ _id: data.variedad });
+
+        if (data.cantidad <= variedad.stock) {
+            let reg = await Carrito.create(data);
+            res.status(200).send({ data: reg });
+        } else {
+            res.status(200).send({ data: undefined, message: 'Stock insuficiente, ingrese otra cantidad' });
+        }
+
+    } else {
+        res.status(500).send({ message: 'NoAccess' });
+    }
+}
+
+const obtener_carrito_cliente = async function (req, res) {
+    if (req.user) {
+        let id = req.params['id'];
+
+        let carrito_cliente = await Carrito.find({ cliente: id }).populate('producto').populate('variedad');
+        res.status(200).send({ data: carrito_cliente });
+    } else {
+        res.status(500).send({ message: 'NoAccess' });
+    }
+}
+
+const eliminar_carrito_cliente = async function (req, res) {
+    if (req.user) {
+        let id = req.params['id'];
+        let reg = await Carrito.findByIdAndRemove({ _id: id });
+        res.status(200).send({ data: reg });
+    } else {
+        res.status(500).send({ message: 'NoAccess' });
+    }
+}
+
 module.exports = {
     recuperar_pass,
     reenviar_codigo,
@@ -436,5 +475,8 @@ module.exports = {
     listar_productos_publico,
     obtener_variedades_productos_cliente,
     obtener_productos_slug_publico,
-    listar_productos_recomendados_publico
+    listar_productos_recomendados_publico,
+    agregar_carrito_cliente,
+    obtener_carrito_cliente,
+    eliminar_carrito_cliente
 }

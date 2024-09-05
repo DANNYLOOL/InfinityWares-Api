@@ -25,4 +25,8 @@ api.post('/verificar_codigo', clienteController.comprobar_codigo);
 api.post('/reenviar_codigo', clienteController.reenviar_codigo);
 api.post('/recuperar_pass', clienteController.recuperar_pass);
 
+api.post('/agregar_carrito_cliente',auth.auth,clienteController.agregar_carrito_cliente);
+api.get('/obtener_carrito_cliente/:id',auth.auth,clienteController.obtener_carrito_cliente);
+api.delete('/eliminar_carrito_cliente/:id',auth.auth,clienteController.eliminar_carrito_cliente);
+
 module.exports = api;
