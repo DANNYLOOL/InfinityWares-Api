@@ -23,6 +23,11 @@ const login_admin = async function (req, res) {
         //LOGIN
         let user = admin_arr[0];
 
+        if (!user.activo) {
+            res.status(200).send({ message: 'El admin no está activo', data: undefined });
+            return;
+        }
+
         bcrypt.compare(data.password, user.password, async function (error, check) {
             if (check) {
                 res.status(200).send({
@@ -157,7 +162,7 @@ const registro_producto_admin = async function (req, res) {
 
         if (productos.length == 0) {
             var img_path = req.files.portada.path;
-            var name = img_path.split('/');
+            var name = img_path.split('\\');
             var portada_name = name[2];
 
             data.slug = data.titulo.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
