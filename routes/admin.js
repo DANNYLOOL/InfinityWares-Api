@@ -8,6 +8,7 @@ var auth = require('../middlewares/authenticate');
 var multiparty = require('connect-multiparty');
 var path = multiparty({uploadDir: './uploads/productos'});
 
+api.post('/registro_admin_tienda',auth.auth,AdminController.registro_admin_tienda);
 api.post('/login_admin',AdminController.login_admin);
 api.get('/listar_admins_tienda',auth.auth,AdminController.listar_admins_tienda);
 api.get('/listar_etiquetas_admin',auth.auth,AdminController.listar_etiquetas_admin);

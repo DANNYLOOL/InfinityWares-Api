@@ -68,6 +68,33 @@ const actualizar_estado_admin = async function(req, res) {
     }
 }
 
+registro_admin_tienda = async function (req, res) {
+    let data = req.body;
+    var admins_arr = [];
+
+    admins_arr = await Admin.find({ email: data.email });
+
+    if (admins_arr.length == 0) {
+        if (data.password) {
+            bcrypt.hash(data.password, null, null, async function (err, hash) {
+                if (hash) {
+                    data.password = hash;
+                    var reg = await Admin.create(data);
+                    res.status(200).send({ data: reg });
+                } else {
+                    res.status(200).send({ message: 'ErrorServer', data: undefined });
+                }
+            })
+        } else {
+            res.status(200).send({ message: 'No hay una contraseña', data: undefined });
+        }
+
+
+    } else {
+        res.status(200).send({ message: 'El correo ya existe, intente con otro.', data: undefined });
+    }
+}
+
 const listar_etiquetas_admin = async function (req, res) {
     if (req.user) {
         var reg = await Etiqueta.find();
@@ -108,7 +135,7 @@ const agregar_etiqueta_admin = async function (req, res) {
 const obtener_skus = async function (req, res) {
     if (req.user) {
         try {
-            let productos = await Producto.find({}, 'sku'); // Solo obtener el campo 'sku'
+            let productos = await Producto.find({}, 'sku');
             let skus = productos.map(producto => producto.sku);
             res.status(200).send({ skus: skus });
         } catch (error) {
@@ -129,7 +156,7 @@ const registro_producto_admin = async function (req, res) {
 
         if (productos.length == 0) {
             var img_path = req.files.portada.path;
-            var name = img_path.split('/');
+            var name = img_path.split('\\');
             var portada_name = name[2];
 
             data.slug = data.titulo.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
@@ -459,6 +486,7 @@ module.exports = {
     listar_admins_tienda,
     actualizar_estado_cliente,
     actualizar_estado_admin,
+    registro_admin_tienda,
     obtener_skus,
     login_admin,
     eliminar_etiqueta_admin,

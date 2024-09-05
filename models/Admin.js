@@ -8,7 +8,7 @@ var AdminSchema = Schema({
     apellidos: {type: String, required: true},
     email: {type: String, required: true},
     password: {type: String, required: true},
-    rol: {type: String, required: true},
+    rol: {type: String, default: "Admin", required: true},
     activo: {type: Boolean, default: true},
 });
 
