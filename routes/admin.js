@@ -37,5 +37,6 @@ api.put('/agregar_imagen_galeria_admin/:id',[auth.auth,path],AdminController.agr
 api.put('/eliminar_imagen_galeria_admin/:id',auth.auth,AdminController.eliminar_imagen_galeria_admin);
 api.get('/verificar_token',auth.auth,AdminController.verificar_token);
 api.get('/cambiar_vs_producto_admin/:id/:estado',auth.auth,AdminController.cambiar_vs_producto_admin);
+api.get('/obtener_portada/:img',AdminController.obtener_portada);
 
 module.exports = api;

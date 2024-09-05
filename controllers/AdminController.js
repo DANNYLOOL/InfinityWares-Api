@@ -9,6 +9,7 @@ var bcrypt = require('bcrypt-nodejs');
 var jwt = require('../helpers/jwt');
 
 var path = require('path');
+var fs = require('fs');
 
 const login_admin = async function (req, res) {
     var data = req.body;
@@ -156,7 +157,7 @@ const registro_producto_admin = async function (req, res) {
 
         if (productos.length == 0) {
             var img_path = req.files.portada.path;
-            var name = img_path.split('\\');
+            var name = img_path.split('/');
             var portada_name = name[2];
 
             data.slug = data.titulo.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
@@ -481,6 +482,7 @@ const cambiar_vs_producto_admin = async function (req, res) {
         res.status(500).send({ message: 'NoAccess' });
     }
 }
+
 
 module.exports = {
     listar_admins_tienda,
