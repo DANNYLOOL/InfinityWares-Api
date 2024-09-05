@@ -162,7 +162,7 @@ const registro_producto_admin = async function (req, res) {
 
         if (productos.length == 0) {
             var img_path = req.files.portada.path;
-            var name = img_path.split('\\');
+            var name = img_path.split('/');
             var portada_name = name[2];
 
             data.slug = data.titulo.toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '');
